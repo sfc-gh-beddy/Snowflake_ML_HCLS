@@ -1,0 +1,67 @@
+# Environment and Credential Files
+.env
+.env.local
+.env.development
+.env.staging
+.env.production
+*.env
+
+# Jupyter Notebook Checkpoints and Cache
+.ipynb_checkpoints/
+.virtual_documents/
+
+# Python Cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+.pytest_cache/
+
+# Conda Environment
+.conda/
+envs/
+
+# IDE and Editor Files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs and Temporary Files
+*.log
+*.tmp
+*.temp
+
+# Snowflake Credentials and Configs
+snowflake_config.json
+credentials.json
+connection_config.py
+
+# Private Keys and Certificates
+*.pem
+*.key
+*.p8
+*.p12
+*.pfx
+*.crt
+*.cer
+
+# Backup Files
+*.bak
+*.backup
+*.orig
+
+# Utility Scripts (sensitive operations)
+clear_notebook_outputs.py

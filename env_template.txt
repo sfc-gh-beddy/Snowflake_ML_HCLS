@@ -1,0 +1,18 @@
+# Snowflake Connection Configuration Template
+# Copy this content to a file named .env in your project directory
+
+SNOWFLAKE_ACCOUNT=your_account_identifier
+SNOWFLAKE_USER=your_username
+SNOWFLAKE_PASSWORD=your_password
+SNOWFLAKE_ROLE=your_role
+SNOWFLAKE_WAREHOUSE=your_warehouse
+SNOWFLAKE_DATABASE=ADVERSE_EVENT_MONITORING
+SNOWFLAKE_SCHEMA=DEMO_ANALYTICS
+
+# Optional configurations
+# SNOWFLAKE_AUTHENTICATOR=externalbrowser  # For SSO
+# SNOWFLAKE_PRIVATE_KEY_PATH=/path/to/private_key.p8  # For key-pair auth
+
+# Demo settings
+DEMO_PATIENT_COUNT=1000
+DEMO_MODE=development 
