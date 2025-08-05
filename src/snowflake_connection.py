@@ -131,14 +131,33 @@ def setup_demo_environment(session):
         print(f"❌ Failed to setup demo environment: {e}")
         return False
 
-# Convenience function for notebooks
-def get_session():
+# Global session storage to prevent multiple concurrent sessions
+_global_session = None
+
+def get_session(force_new=False):
     """
     Get a configured Snowflake session with testing and environment setup.
+    Reuses existing session unless force_new=True.
+    
+    Args:
+        force_new (bool): Force creation of new session
     
     Returns:
         Session: Ready-to-use Snowpark session
     """
+    global _global_session
+    
+    # Try to reuse existing session unless forced to create new
+    if not force_new and _global_session is not None:
+        try:
+            # Test if existing session is still valid
+            _global_session.sql("SELECT 1").collect()
+            print("🔄 Reusing existing Snowflake session")
+            return _global_session
+        except:
+            print("⚠️ Existing session invalid, creating new one...")
+            _global_session = None
+    
     print("🚀 Initializing Snowflake ML Platform connection...")
     
     session = create_snowflake_session()
@@ -151,6 +170,8 @@ def get_session():
     if not setup_demo_environment(session):
         print("⚠️ Demo environment setup failed - continuing anyway")
     
+    # Store globally for reuse
+    _global_session = session
     print("🎉 Ready for ML Platform operations!")
     return session
 
