@@ -170,7 +170,6 @@ Execute the Jupyter notebooks in sequence:
 
 ### 6. Observability & Monitoring
 - **Native Model Monitor**: Uses Snowflake's built-in `CREATE MODEL MONITOR` 
-- **Data Drift Detection**: Automatic feature distribution monitoring
 - **Performance Tracking**: Model accuracy and prediction monitoring
 - **Integration**: Required for Inference Services (notebook 8)
 
