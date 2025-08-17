@@ -173,7 +173,7 @@ jupyter lab
 - **Quality Monitoring**: Prediction distribution analysis
 - **Alerting**: Automated notifications for degradation
 
-## 🚨 Troubleshooting
+## Troubleshooting
 
 ### Common Issues
 
@@ -201,7 +201,7 @@ jupyter lab
 - **Caching**: Leverage Snowflake's automatic result caching
 
 
-## 📚 Additional Resources
+## Additional Resources
 
 - [Snowflake ML Documentation](https://docs.snowflake.com/en/developer-guide/snowpark-ml/index)
 - [Snowpark ML Python API Reference](https://docs.snowflake.com/en/developer-guide/snowpark-ml/snowpark-ml-mlops)
@@ -210,6 +210,6 @@ jupyter lab
 
 ---
 
-**🎉 Happy ML modeling with Snowflake!**
+**Happy ML modeling with Snowflake!**
 
 For questions or support, please reach out to your Snowflake solutions team. 
