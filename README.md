@@ -40,34 +40,6 @@ ML Pipeline
 └── Experiment Tracking (Performance monitoring)
 ```
 
-## Project Structure
-
-```
-Snowflake_ML_HCLS/
-├── README.md
-├── setup_environment.sh
-├── requirements.txt
-├── src/
-│   ├── snowflake_connection.py
-│   └── connection_test.py
-├── notebooks/
-│   ├── 01_Environment_Setup.ipynb
-│   ├── 02_FAERS_Data_Setup.ipynb
-│   ├── 03_Analytics_Tables_Setup.ipynb
-│   ├── 03b_FAERS_HCLS_Integration.ipynb
-│   ├── 04_Feature_Engineering.ipynb
-│   ├── 05_Model_Training.ipynb
-│   ├── 05a_SPCS_Distributed_Setup.ipynb
-│   ├── 05b_True_Distributed_Training.ipynb
-│   ├── 06_Model_Evaluation.ipynb
-│   ├── 07_ML_Observability.ipynb
-│   ├── 08_ML_Inference_Pipeline.ipynb
-│   └── 09_Experiment_Tracking.ipynb
-└── docs/
-    ├── LOCAL_SETUP_GUIDE.md
-    ├── CONDA_FIX_GUIDE.md
-```
-
 ## Quick Start
 
 ### Prerequisites
