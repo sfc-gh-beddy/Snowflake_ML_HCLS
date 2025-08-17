@@ -7,11 +7,11 @@ A comprehensive end-to-end machine learning demo showcasing Snowflake's ML capab
 **Business Question**: *"Can we accurately predict which patients are at high risk of adverse health events based on their demographic information, medical history, claims data, and reported adverse event data?"*
 
 This demo demonstrates:
-- **End-to-end ML pipeline** in Snowflake Data Cloud
-- **Distributed training** with Snowpark ML
-- **Model governance** with Model Registry
-- **Zero-copy deployment** as SQL UDFs
-- **Built-in observability** and monitoring
+- **End-to-end ML pipeline**
+- **Distributed training**
+- **Model governance**
+- **Model Registry API**
+- **Native Model Monitors**
 
 ## Architecture
 
@@ -35,44 +35,37 @@ Feature Engineering
 ML Pipeline
 ├── Distributed Training (Snowpark ML XGBoost)
 ├── Model Registry (Versioning & Governance)
-├── UDF Deployment (SQL-native inference)
-├── Experiment Tracking (Performance monitoring)
-└── ML Observability (Drift & Performance monitoring)
+├── Model Registry API (Production inference)
+├── Native Model Monitor (Drift & Performance)
+└── Experiment Tracking (Performance monitoring)
 ```
 
 ## Project Structure
 
 ```
 Snowflake_ML_HCLS/
-├── ML Demo.md                      # Original requirements document
-├── README.md                       # This file
-├── setup_environment.sh            # Environment setup script
-├── requirements.txt                # Python dependencies
-├── src/                            # Connection utilities
+├── README.md
+├── setup_environment.sh
+├── requirements.txt
+├── src/
 │   ├── snowflake_connection.py
 │   └── connection_test.py
-├── notebooks/                      # Complete ML pipeline
-│   ├── 00_Connection_Test.ipynb       # Snowflake connection verification
-│   ├── 00_IDE_Test.ipynb             # Development environment test
-│   ├── 01_Environment_Setup.ipynb    # Database and warehouse setup
-│   ├── 02_FAERS_Data_Setup.ipynb     # FDA adverse event data
-│   ├── 03_Analytics_Tables_Setup.ipynb # Synthetic healthcare data generation
-│   ├── 03b_FAERS_HCLS_Integration.ipynb # Data integration
-│   ├── 04_Feature_Engineering.ipynb  # ML feature preparation
-│   ├── 05_Model_Training.ipynb       # Distributed ML training
-│   ├── 05a_SPCS_Distributed_Setup.ipynb # Container services setup
-│   ├── 05b_True_Distributed_Training.ipynb # Advanced distributed training
-│   ├── 06_Model_Evaluation.ipynb     # Model performance analysis
-│   ├── 07_ML_Inference_Pipeline.ipynb # Production inference
-│   ├── 08_ML_Observability.ipynb     # Monitoring and drift detection
-│   └── 09_Experiment_Tracking.ipynb  # ML experiment management
-├── utils/                         # Helper utilities
-│   ├── clear_notebook_outputs.py
-│   └── update_notebooks.py
-└── docs/                          # Additional documentation
+├── notebooks/
+│   ├── 01_Environment_Setup.ipynb
+│   ├── 02_FAERS_Data_Setup.ipynb
+│   ├── 03_Analytics_Tables_Setup.ipynb
+│   ├── 03b_FAERS_HCLS_Integration.ipynb
+│   ├── 04_Feature_Engineering.ipynb
+│   ├── 05_Model_Training.ipynb
+│   ├── 05a_SPCS_Distributed_Setup.ipynb
+│   ├── 05b_True_Distributed_Training.ipynb
+│   ├── 06_Model_Evaluation.ipynb
+│   ├── 07_ML_Observability.ipynb
+│   ├── 08_ML_Inference_Pipeline.ipynb
+│   └── 09_Experiment_Tracking.ipynb
+└── docs/
     ├── LOCAL_SETUP_GUIDE.md
-    ├── IDE_SETUP_GUIDE.md
-    └── DEMO_ASSETS_SUMMARY.md
+    ├── CONDA_FIX_GUIDE.md
 ```
 
 ## Quick Start
@@ -102,27 +95,12 @@ chmod +x setup_environment.sh
 
 ### Step 2: Configure Snowflake Connection
 
-Update your connection parameters in `src/snowflake_connection.py`:
-
-```python
-connection_params = {
-    'account': os.getenv('SNOWFLAKE_ACCOUNT'),
-    'user': os.getenv('SNOWFLAKE_USER'),
-    'password': os.getenv('SNOWFLAKE_PASSWORD'),
-    'role': os.getenv('SNOWFLAKE_ROLE'),
-    'warehouse': os.getenv('SNOWFLAKE_WAREHOUSE'),
-    'database': os.getenv('SNOWFLAKE_DATABASE', 'ADVERSE_EVENT_MONITORING'),
-    'schema': os.getenv('SNOWFLAKE_SCHEMA', 'DEMO_ANALYTICS')
-}
-```
-
 Create a `.env` file in the root of the directory with the template below
 
 ```bash
 # Snowflake Connection Configuration Template
 # Copy this content to a file named .env in your project directory
 
-# Replace all _ with -
 SNOWFLAKE_ACCOUNT=<<SNOWFLAKE_ACCOUNT>>
 SNOWFLAKE_USER=<<SNOWFLAKE_USER>>
 SNOWFLAKE_PASSWORD=<<SNOWFLAKE_PASSWORD>>
@@ -134,6 +112,9 @@ SNOWFLAKE_SCHEMA=DEMO_ANALYTICS
 # Demo settings
 DEMO_PATIENT_COUNT=1000
 DEMO_MODE=development 
+```
+
+Run `src/snowflake_connection.py` to ensure that connection to snowflake is successful.
 
 ### Step 4: Run the Complete Pipeline
 
@@ -141,17 +122,16 @@ Execute the Jupyter notebooks in sequence:
 
 ```bash
 # Run notebooks in order:
-# 1. 00_Connection_Test.ipynb - Verify Snowflake connectivity
-# 2. 01_Environment_Setup.ipynb - Set up database and warehouse
-# 3. 02_FAERS_Data_Setup.ipynb - Load FDA adverse event data
-# 4. 03_Analytics_Tables_Setup.ipynb - Generate synthetic healthcare data
-# 5. 03b_FAERS_HCLS_Integration.ipynb - Integrate data sources
-# 6. 04_Feature_Engineering.ipynb - Prepare ML features
-# 7. 05_Model_Training.ipynb - Train ML models
-# 8. 06_Model_Evaluation.ipynb - Evaluate model performance
-# 9. 07_ML_Inference_Pipeline.ipynb - Deploy inference pipeline
-# 10. 08_ML_Observability.ipynb - Set up monitoring
-# 11. 09_Experiment_Tracking.ipynb - Track experiments
+# 1. 01_Environment_Setup.ipynb - Set up database and warehouse
+# 2. 02_FAERS_Data_Setup.ipynb - Load FDA adverse event data
+# 3. 03_Analytics_Tables_Setup.ipynb - Generate synthetic healthcare data
+# 4. 03b_FAERS_HCLS_Integration.ipynb - Integrate data sources
+# 5. 04_Feature_Engineering.ipynb - Prepare ML features
+# 6. 05_Model_Training.ipynb - Train ML models
+# 7. 06_Model_Evaluation.ipynb - Evaluate model performance
+# 8. 07_ML_Observability.ipynb - Create native Model Monitor (REQUIRED before notebook 8)
+# 9. 08_ML_Inference_Pipeline.ipynb - Deploy inference using Model Registry API
+# 10. 09_Experiment_Tracking.ipynb - Track experiments
 ```
 
 ## Pipeline Stages
@@ -168,8 +148,12 @@ Execute the Jupyter notebooks in sequence:
 
 ### 3. Model Training
 - **Algorithms**: XGBoost Regressor, Linear Regression (comparison)
-- **Features**: Age, claims, conditions, medications, FAERS risk scores
-- **Target**: Continuous risk score prediction (0-100 scale)
+- **Features**: 16 input features including:
+  - Demographics: Age, conditions, medications, claims
+  - Risk Scores: Max medication risk, Warfarin/Statin risks
+  - Medical Events: Bleeding, liver, cardiac risk events  
+  - Condition Flags: Cardiovascular, diabetes, kidney disease, etc.
+- **Target**: `PREDICTED_ADVERSE_EVENT_RISK` (continuous prediction)
 - **Training**: Distributed training with Snowpark ML
 - **Validation**: K-fold cross-validation with statistical testing
 
@@ -178,44 +162,17 @@ Execute the Jupyter notebooks in sequence:
 - **Governance**: Stage management (Staging → Production)
 - **Lineage**: Training data and feature tracking
 
-### 5. Deployment
-- **UDF Creation**: Model deployed as SQL function
-- **Inference**: Real-time predictions via SQL queries
-- **Integration**: Seamless with existing data workflows
+### 5. Deployment & Inference
+- **Model Registry API**: Uses `model_version.run()` for predictions
+- **Real-time Inference**: Individual patient risk scoring
+- **Batch Processing**: Multiple patient cohort analysis
+- **Native Integration**: Works with existing Model Monitor setup
 
-### 6. Observability
-- **Performance Monitoring**: Accuracy, precision, recall tracking
-- **Data Drift Detection**: Feature distribution changes
-- **Quality Monitoring**: Prediction distribution analysis
-- **Alerting**: Automated notifications for degradation
-
-## Troubleshooting
-
-### Common Issues
-
-1. **Model Registry not available**
-   - Ensure Model Registry is enabled for your account
-   - Contact Snowflake support for feature enablement
-
-2. **Snowpark ML import errors**
-   - Install: `pip install snowflake-ml-python`
-   - Verify Snowpark ML is enabled in your account
-
-3. **Permission errors**
-   - Ensure you have `CREATE FUNCTION` privileges
-   - Database and schema creation requires `ACCOUNTADMIN` or appropriate roles
-
-4. **Data loading issues**
-   - Demo automatically generates 50K synthetic patient records
-   - FAERS data is loaded from publicly available FDA datasets
-   - No external marketplace data required
-
-### Performance Optimization
-
-- **Warehouse sizing**: Start with MEDIUM, scale up for larger datasets
-- **Clustering**: Consider clustering keys for large tables
-- **Caching**: Leverage Snowflake's automatic result caching
-
+### 6. Observability & Monitoring
+- **Native Model Monitor**: Uses Snowflake's built-in `CREATE MODEL MONITOR` 
+- **Data Drift Detection**: Automatic feature distribution monitoring
+- **Performance Tracking**: Model accuracy and prediction monitoring
+- **Integration**: Required for Inference Services (notebook 8)
 
 ## Additional Resources
 
