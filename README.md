@@ -204,9 +204,9 @@ jupyter lab
 ## Additional Resources
 
 - [Snowflake ML Documentation](https://docs.snowflake.com/en/developer-guide/snowpark-ml/index)
-- [Snowpark ML Python API Reference](https://docs.snowflake.com/en/developer-guide/snowpark-ml/snowpark-ml-mlops)
+- [Snowpark ML Python API Reference](https://docs.snowflake.com/en/developer-guide/snowflake-ml/snowpark-ml)
 - [Model Registry Guide](https://docs.snowflake.com/en/developer-guide/snowpark-ml/snowpark-ml-mlops-model-registry)
-- [ML Observability Documentation](https://docs.snowflake.com/en/user-guide/ml-powered-functions#model-monitoring)
+- [ML Observability Documentation](https://docs.snowflake.com/en/developer-guide/snowflake-ml/model-registry/model-observability)
 
 ---
 
