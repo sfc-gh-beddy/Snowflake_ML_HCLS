@@ -17,22 +17,27 @@ This demo demonstrates:
 
 ```
 📊 Data Sources
-├── SYN_HCLS_DATA (Synthetic Healthcare)
-│   ├── Patients, Claims, Conditions, Medications
+├── Generated Synthetic Healthcare Data
+│   ├── 50K Patient records with demographics
+│   ├── Medical history, conditions, medications
+│   └── Claims data and utilization patterns
 └── FDA FAERS (Adverse Event Reporting)
     ├── Adverse Events, Drugs, Reactions, Outcomes
+    └── Drug safety risk profiles
 
 🔧 Feature Engineering
 ├── Patient Demographics (Age, Gender, Race)
 ├── Medical History (Conditions, Medications)
 ├── Claims Analytics (Total costs, Frequency)
-└── FAERS Risk Scores (Drug safety signals)
+├── FAERS Risk Scores (Drug safety signals)
+└── Bonferroni Correction (Statistical rigor)
 
 🎯 ML Pipeline
-├── Distributed Training (Snowpark ML)
+├── Distributed Training (Snowpark ML XGBoost)
 ├── Model Registry (Versioning & Governance)
 ├── UDF Deployment (SQL-native inference)
-└── Observability (Drift & Performance monitoring)
+├── Experiment Tracking (Performance monitoring)
+└── ML Observability (Drift & Performance monitoring)
 ```
 
 ## 📁 Project Structure
@@ -41,19 +46,33 @@ This demo demonstrates:
 Snowflake_ML_HCLS/
 ├── 📄 ML Demo.md                      # Original requirements document
 ├── 📋 README.md                       # This file
-├── 🛠️ Setup Scripts/
-│   ├── 01_snowflake_environment_setup.sql
-│   ├── 02_faers_data_setup.sql
-│   └── 03_analytics_tables_setup.sql
-├── 🐍 Python Pipeline/
-│   ├── 04_feature_engineering.py
-│   ├── 05_model_training.py
-│   ├── 06_model_registry_deployment.py
-│   ├── 07_model_observability.py
-│   └── 08_demo_walkthrough.py
-└── 📊 Demo Assets/
-    ├── demo_presentation_guide.md
-    └── inference_example.sql
+├── 🛠️ setup_environment.sh            # Environment setup script
+├── 📦 requirements.txt                # Python dependencies
+├── 🐍 src/                            # Connection utilities
+│   ├── snowflake_connection.py
+│   └── connection_test.py
+├── 📓 notebooks/                      # Complete ML pipeline
+│   ├── 00_Connection_Test.ipynb       # Snowflake connection verification
+│   ├── 00_IDE_Test.ipynb             # Development environment test
+│   ├── 01_Environment_Setup.ipynb    # Database and warehouse setup
+│   ├── 02_FAERS_Data_Setup.ipynb     # FDA adverse event data
+│   ├── 03_Analytics_Tables_Setup.ipynb # Synthetic healthcare data generation
+│   ├── 03b_FAERS_HCLS_Integration.ipynb # Data integration
+│   ├── 04_Feature_Engineering.ipynb  # ML feature preparation
+│   ├── 05_Model_Training.ipynb       # Distributed ML training
+│   ├── 05a_SPCS_Distributed_Setup.ipynb # Container services setup
+│   ├── 05b_True_Distributed_Training.ipynb # Advanced distributed training
+│   ├── 06_Model_Evaluation.ipynb     # Model performance analysis
+│   ├── 07_ML_Inference_Pipeline.ipynb # Production inference
+│   ├── 08_ML_Observability.ipynb     # Monitoring and drift detection
+│   └── 09_Experiment_Tracking.ipynb  # ML experiment management
+├── 🛠️ utils/                         # Helper utilities
+│   ├── clear_notebook_outputs.py
+│   └── update_notebooks.py
+└── 📚 docs/                          # Additional documentation
+    ├── LOCAL_SETUP_GUIDE.md
+    ├── IDE_SETUP_GUIDE.md
+    └── DEMO_ASSETS_SUMMARY.md
 ```
 
 ## 🚀 Quick Start
@@ -68,34 +87,22 @@ Snowflake_ML_HCLS/
 
 ### Step 1: Environment Setup
 
-Run the SQL setup scripts in Snowsight or SnowSQL:
-
-```sql
--- 1. Create database, schemas, and warehouse
-@01_snowflake_environment_setup.sql
-
--- 2. Set up FAERS data structures  
-@02_faers_data_setup.sql
-
--- 3. Create analytics and ML tables
-@03_analytics_tables_setup.sql
-```
-
-### Step 2: Python Environment
-
 ```bash
-# Install required packages
-pip install snowflake-snowpark-python[pandas]
-pip install snowflake-ml-python
-
-# Clone/download this repository
+# Clone the repository
 git clone <your-repo-url>
 cd Snowflake_ML_HCLS
+
+# Install Python dependencies
+pip install -r requirements.txt
+
+# Make setup script executable and run it
+chmod +x setup_environment.sh
+./setup_environment.sh
 ```
 
-### Step 3: Update Connection Parameters
+### Step 2: Configure Snowflake Connection
 
-Edit the connection parameters in each Python script:
+Update your connection parameters in `src/snowflake_connection.py`:
 
 ```python
 connection_parameters = {
@@ -109,17 +116,26 @@ connection_parameters = {
 }
 ```
 
-### Step 4: Run the Complete Demo
+### Step 4: Run the Complete Pipeline
 
-```python
-# Option A: Run complete pipeline
-python 08_demo_walkthrough.py
+Execute the Jupyter notebooks in sequence:
 
-# Option B: Run individual steps
-python 04_feature_engineering.py
-python 05_model_training.py
-python 06_model_registry_deployment.py
-python 07_model_observability.py
+```bash
+# Start Jupyter Lab
+jupyter lab
+
+# Run notebooks in order:
+# 1. 00_Connection_Test.ipynb - Verify Snowflake connectivity
+# 2. 01_Environment_Setup.ipynb - Set up database and warehouse
+# 3. 02_FAERS_Data_Setup.ipynb - Load FDA adverse event data
+# 4. 03_Analytics_Tables_Setup.ipynb - Generate synthetic healthcare data
+# 5. 03b_FAERS_HCLS_Integration.ipynb - Integrate data sources
+# 6. 04_Feature_Engineering.ipynb - Prepare ML features
+# 7. 05_Model_Training.ipynb - Train ML models
+# 8. 06_Model_Evaluation.ipynb - Evaluate model performance
+# 9. 07_ML_Inference_Pipeline.ipynb - Deploy inference pipeline
+# 10. 08_ML_Observability.ipynb - Set up monitoring
+# 11. 09_Experiment_Tracking.ipynb - Track experiments
 ```
 
 ## 🔄 Pipeline Stages
@@ -135,10 +151,11 @@ python 07_model_observability.py
 - **Feature Engineering**: Combines data sources into ML-ready features
 
 ### 3. 🎯 Model Training
-- **Algorithm**: Random Forest Classifier (configurable)
-- **Features**: Age, claims, conditions, medications, demographics
-- **Target**: Binary adverse event prediction
-- **Training**: Distributed on Snowflake compute
+- **Algorithms**: XGBoost Regressor, Linear Regression (comparison)
+- **Features**: Age, claims, conditions, medications, FAERS risk scores
+- **Target**: Continuous risk score prediction (0-100 scale)
+- **Training**: Distributed training with Snowpark ML
+- **Validation**: K-fold cross-validation with statistical testing
 
 ### 4. 📦 Model Registry
 - **Registration**: Model versioning with metadata
@@ -210,10 +227,11 @@ FROM patient_data;
 - Target variable creation from ICD codes
 
 ### ✅ Distributed ML Training
-- Snowpark ML RandomForestClassifier
+- Snowpark ML XGBoost and Linear Regression models
 - Automatic data distribution and parallelization
-- Built-in model evaluation metrics
-- Hyperparameter tracking
+- Built-in model evaluation metrics (MAE, RMSE, R²)
+- Cross-validation and hyperparameter tracking
+- Bonferroni correction for statistical rigor
 
 ### ✅ Model Governance
 - Model Registry with versioning
@@ -228,47 +246,68 @@ FROM patient_data;
 - Elastic scaling with Snowflake compute
 
 ### ✅ Built-in Observability
-- Data drift detection
-- Model performance monitoring
-- Prediction quality analysis
-- Automated alerting and notifications
+- Data drift detection with statistical tests
+- Model performance monitoring and alerting
+- Prediction quality analysis and trending
+- Clinical impact measurement
+- Business impact tracking
+- Native Snowflake Model Monitors integration
 
 ## 📊 Sample Results
 
 ### Model Performance
 ```
-Accuracy:  0.8543
-Precision: 0.8201
-Recall:    0.7834
-F1 Score:  0.8014
+XGBoost Optimized:
+  MAE:     1.0620
+  RMSE:    2.4406  
+  R²:      0.8367
+  CV Mean: 0.8298
+
+Linear Baseline:
+  MAE:     4.2125
+  RMSE:    5.3037
+  R²:      0.4567
+  CV Mean: 0.4432
 ```
 
 ### Risk Predictions
 ```
-Patient P001 (Age 45): LOW RISK ✅
-Patient P002 (Age 68): HIGH RISK ⚠️
-Patient P003 (Age 22): LOW RISK ✅
-Patient P004 (Age 75): HIGH RISK ⚠️
-Patient P005 (Age 35): LOW RISK ✅
+Patient TEST_001 (Age 65, 5 conditions): Risk Score 67.2 (MEDIUM)
+Patient TEST_002 (Age 35, 2 conditions): Risk Score 28.5 (LOW)
+Patient TEST_003 (Age 78, 12 conditions): Risk Score 89.4 (HIGH)
+
+With Bonferroni Drug Safety Correction:
+Patient Enhanced_001 (Warfarin): Risk Score 67.2 → 82.2 (+15 safety adjustment)
+Patient Enhanced_002 (Metformin): Risk Score 28.5 → 28.5 (no adjustment)
 ```
 
 ## 🔍 Monitoring Dashboard Views
 
 ### Model Performance Summary
 ```sql
-SELECT * FROM MODEL_PERFORMANCE_SUMMARY;
+SELECT * FROM ADVERSE_EVENT_MONITORING.DEMO_ANALYTICS.ML_MODEL_PERFORMANCE_MONITORING
+ORDER BY METRIC_TIMESTAMP DESC;
 ```
 
 ### Data Drift Detection
 ```sql
-SELECT * FROM DATA_DRIFT_SUMMARY 
-WHERE drift_detected = TRUE;
+SELECT * FROM ADVERSE_EVENT_MONITORING.DEMO_ANALYTICS.ML_MODEL_DRIFT_DETECTION 
+WHERE DRIFT_DETECTED = TRUE
+ORDER BY DETECTION_TIMESTAMP DESC;
 ```
 
-### Prediction Quality Trends
+### Clinical Impact Analysis
 ```sql
-SELECT * FROM PREDICTION_QUALITY_TREND 
-ORDER BY monitoring_date DESC;
+SELECT * FROM ADVERSE_EVENT_MONITORING.DEMO_ANALYTICS.ML_BUSINESS_IMPACT_MONITORING
+ORDER BY MONITORING_TIMESTAMP DESC;
+```
+
+### Experiment Tracking
+```sql
+-- View all experiments in Snowsight: AI & ML → Experiments → 'Healthcare_ML_HCLS_Pipeline'
+SELECT experiment_name, run_name, metrics, parameters 
+FROM ML_EXPERIMENTS.EXPERIMENT_RUNS
+ORDER BY created_timestamp DESC;
 ```
 
 ## 🚨 Troubleshooting
@@ -288,8 +327,9 @@ ORDER BY monitoring_date DESC;
    - Database and schema creation requires `ACCOUNTADMIN` or appropriate roles
 
 4. **Data loading issues**
-   - SYN_HCLS_DATA may not exist - demo creates sample data automatically
-   - FAERS data requires manual upload to internal stage
+   - Demo automatically generates 50K synthetic patient records
+   - FAERS data is loaded from publicly available FDA datasets
+   - No external marketplace data required
 
 ### Performance Optimization
 

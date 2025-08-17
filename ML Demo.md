@@ -1,10 +1,10 @@
 # **Building the Snowflake ML Demo: A Step-by-Step Guide**
 
-This document provides a comprehensive guide to building the Snowflake ML Demo, leveraging the latest features like distributed training, model registry, and observability. It is structured to be actionable, allowing an AI assistant or a developer to follow along and implement the solution.
+This document provides a comprehensive guide to building the Snowflake ML Demo, leveraging the latest features like distributed training, model registry, experiment tracking, and observability. The implementation uses Jupyter notebooks to create an end-to-end ML pipeline with synthetic healthcare data.
 
 ## **1\. Introduction**
 
-This guide translates the Product Requirements Document (PRD) for the Snowflake ML Demo into a series of practical steps. The goal is to demonstrate an end-to-end machine learning workflow within Snowflake, focusing on predicting adverse health events using a combination of Snowflake Marketplace and FDA FAERS data.
+This guide translates the Product Requirements Document (PRD) for the Snowflake ML Demo into a series of practical steps. The goal is to demonstrate an end-to-end machine learning workflow within Snowflake, focusing on predicting adverse health events using synthetic healthcare data and FDA FAERS data.
 
 ## **2\. Demo Overview & Objective**
 
@@ -30,13 +30,14 @@ Before you begin, ensure you have:
 
 ## **4\. Step-by-Step Implementation Guide**
 
-### **Step 1: Snowflake Environment Setup**
+### **Step 1: Jupyter Notebook Environment Setup**
 
-This step involves configuring your Snowflake environment to support the ML workload.
+This step involves setting up your development environment to run the complete ML pipeline.
 
-1. **Login to Snowsight:** Access your Snowflake account through the Snowsight web interface.  
-2. **Create Database, Schemas, and Virtual Warehouse:**  
-   * Execute the following SQL script to set up your database, schemas, and warehouse as you've defined them:
+1. **Clone Repository:** Download the complete notebook-based ML pipeline.
+2. **Install Dependencies:** Set up Python environment with required packages.
+3. **Configure Connection:** Update Snowflake connection parameters.  
+4. **Run Notebooks Sequentially:** Execute the 11 notebooks in order to build the complete pipeline.
 
 \-- Database setup script  
 \-- Create new database for adverse event monitoring demo  
@@ -66,18 +67,16 @@ USE WAREHOUSE ADVERSE\_EVENT\_WH;
 
 This is a crucial step where we bring in and transform the raw healthcare data.
 
-1. **Ingest Synthetic Healthcare Data (from your provided database):**  
-   * **Source:** Your SYN\_HCLS\_DATA database, specifically the tables under the SILVER schema (PATIENTS, CLAIMS, CONDITIONS, MEDICATIONS).  
-   * **Process:** This data is already available in your Snowflake account. You will directly query these tables for feature engineering.
+1. **Generate Synthetic Healthcare Data:**  
+   * **Source:** Automatically generated within the demo using SQL GENERATOR functions.  
+   * **Process:** The demo creates 50,000 synthetic patient records with realistic demographics, medical conditions, medications, and claims data.  
+   * **Location:** All synthetic data is stored in the ADVERSE_EVENT_MONITORING.DEMO_ANALYTICS schema.
 
-\-- Example: Verify access to your synthetic healthcare data  
-USE DATABASE SYN\_HCLS\_DATA;  
-USE SCHEMA SILVER;  
-SELECT \* FROM SYN\_HCLS\_DATA.SILVER.PATIENTS LIMIT 10;  
-SELECT \* FROM SYN\_HCLS\_DATA.SILVER.CLAIMS LIMIT 10;  
-\-- Switch back to your demo database  
+\-- Example: The demo automatically creates this synthetic data  
 USE DATABASE ADVERSE\_EVENT\_MONITORING;  
-USE SCHEMA FDA\_FAERS;
+USE SCHEMA DEMO\_ANALYTICS;  
+SELECT \* FROM PREPARED\_HEALTHCARE\_ANALYTICS LIMIT 10;  
+\-- 50,000 synthetic patient records with full medical profiles
 
 2. **Ingest FDA FAERS Data:**  
    * **Dataset:** FDA Adverse Event Reporting System (FAERS) data (https://fis.fda.gov/extensions/FPD-QDE-FAERS/FPD-QDE-FAERS.html).  

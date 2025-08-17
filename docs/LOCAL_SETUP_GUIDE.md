@@ -30,7 +30,7 @@ source ~/.zshrc   # macOS with zsh
 ```bash
 # Clone repository
 git clone <your-repo>
-cd snowflake-ml-platform
+cd Snowflake_ML_HCLS
 
 # Run automated setup
 chmod +x setup_environment.sh
