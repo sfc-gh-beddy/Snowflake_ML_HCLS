@@ -1,8 +1,8 @@
-# 🚀 Snowflake ML Platform - Local Setup Guide
+# Snowflake ML Platform - Local Setup Guide
 
 This guide will help you set up and run the complete ML platform notebooks on your local machine.
 
-## 📋 Prerequisites
+## Prerequisites
 
 Before starting, ensure you have:
 
@@ -11,7 +11,7 @@ Before starting, ensure you have:
 - **Snowflake Account** with appropriate permissions
 - **Git** (to clone this repository)
 
-## 🛠️ Recommended Setup (Works for 95% of users)
+## Recommended Setup (Works for 95% of users)
 
 ### Step 1: Initialize Conda (First-time only)
 
@@ -60,7 +60,7 @@ python connection_test.py
 jupyter lab
 ```
 
-## 🔑 Snowflake Configuration
+## Snowflake Configuration
 
 ### Required Information
 
@@ -80,30 +80,30 @@ In Snowflake Web UI:
 1. Click your name (top right) → Account
 2. Copy the account identifier (format: `abc12345.region`)
 
-## 🚀 Running the Notebooks
+## Running the Notebooks
 
 ### Execution Order
 
-#### 📚 Core Platform (Run First)
+#### Core Platform (Run First)
 1. **01_Environment_Setup.ipynb** - Set up Snowflake environment
 2. **02_FAERS_Data_Setup.ipynb** - Create data structures
 3. **03_Analytics_Tables_Setup.ipynb** - Analytics infrastructure
 4. **04_Feature_Engineering.ipynb** - Process and prepare data
 
-#### 🎯 Advanced ML Training
+#### Advanced ML Training
 5. **05_Model_Training.ipynb** - Train initial models
 6. **06_Model_Registry_Deployment.ipynb** - Deploy models
 7. **07_Model_Observability.ipynb** - Set up monitoring
 8. **08_Demo_Walkthrough.ipynb** - Basic demo
 
-#### 🚀 Advanced Platform (The Good Stuff!)
+#### Advanced Platform (The Good Stuff!)
 9. **09_Feature_Store_Setup.ipynb** - Enterprise feature store
 10. **10_Unsupervised_ML.ipynb** - Clustering & anomaly detection
 11. **11_Training_Pipeline.ipynb** - Unified training pipeline
 12. **12_Inference_Pipeline.ipynb** - Real-time inference
 13. **13_ML_Platform_Demo.ipynb** - **Complete platform showcase**
 
-## 🛠️ Alternative Setup Methods
+## Alternative Setup Methods
 
 ### Option 2: Manual Conda Setup
 
@@ -148,7 +148,7 @@ conda activate snowflake-ml-platform
 pip install -r requirements.txt
 ```
 
-## 🔧 Common Issues & Solutions
+## Common Issues & Solutions
 
 ### Issue: "CondaError: Run 'conda init' before 'conda activate'"
 
@@ -173,10 +173,10 @@ conda install -c conda-forge snowflake-ml-python
 ### Issue: "Authentication failed"
 
 **Solutions:**
-1. ✅ Verify account identifier format: `abc12345.region`
-2. ✅ Check username/password in `.env`
-3. ✅ Ensure role has necessary permissions
-4. ✅ Try browser-based authentication:
+1. Verify account identifier format: `abc12345.region`
+2. Check username/password in `.env`
+3. Ensure role has necessary permissions
+4. Try browser-based authentication:
    ```
    # Add to .env file:
    SNOWFLAKE_AUTHENTICATOR=externalbrowser
@@ -190,19 +190,7 @@ Your Snowflake role needs:
 - `CREATE TABLE`
 - `CREATE WAREHOUSE` (or use existing)
 
-## 📊 Expected Resource Usage
-
-### Local Machine
-- **CPU**: 4+ cores recommended
-- **RAM**: 8GB+ for data processing
-- **Storage**: 2GB+ for notebooks and data
-
-### Snowflake Credits
-- **Setup & Basic Demo**: ~5-10 credits
-- **Complete Platform Demo**: ~20-50 credits
-- **GPU Training**: Additional credits for GPU compute pools
-
-## 🎯 Verification Steps
+## Verification Steps
 
 After setup, verify everything works:
 
@@ -214,10 +202,10 @@ conda activate snowflake-ml-platform
 python connection_test.py
 
 # Should see:
-# ✅ All packages imported successfully!
-# ✅ Snowflake connection successful!
-# ✅ Query successful!
-# ✅ Database creation/deletion permissions verified
+# All packages imported successfully!
+# Snowflake connection successful!
+# Query successful!
+# Database creation/deletion permissions verified
 ```
 
 ## 🏗️ Project Structure

@@ -2,7 +2,7 @@
 
 If you see the error: `CondaError: Run 'conda init' before 'conda activate'`
 
-## 🚀 Quick Fix Options
+## Quick Fix Options
 
 ### Option 1: Initialize Conda (Recommended)
 
@@ -61,14 +61,14 @@ python connection_test.py
 jupyter lab
 ```
 
-## 💡 Why This Happens
+## Why This Happens
 
 - Conda needs to be "initialized" to work in your shell
 - This adds conda commands to your shell's startup file
 - It's a one-time setup per system
 - The error is common on fresh conda installations
 
-## 🚨 Alternative: Use pip + venv
+## Alternative: Use pip + venv
 
 If conda continues to cause issues:
 
@@ -86,7 +86,7 @@ snowflake-ml-platform\Scripts\activate
 pip install -r requirements.txt
 ```
 
-## ✅ Success Check
+## Success Check
 
 You'll know it worked when:
 - No conda activation errors
