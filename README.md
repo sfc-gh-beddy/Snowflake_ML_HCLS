@@ -105,25 +105,41 @@ chmod +x setup_environment.sh
 Update your connection parameters in `src/snowflake_connection.py`:
 
 ```python
-connection_parameters = {
-    "account": "your_account.region",
-    "user": "your_username",
-    "password": "your_password",
-    "role": "your_role",
-    "warehouse": "ADVERSE_EVENT_WH",
-    "database": "ADVERSE_EVENT_MONITORING",
-    "schema": "DEMO_ANALYTICS"
+connection_params = {
+    'account': os.getenv('SNOWFLAKE_ACCOUNT'),
+    'user': os.getenv('SNOWFLAKE_USER'),
+    'password': os.getenv('SNOWFLAKE_PASSWORD'),
+    'role': os.getenv('SNOWFLAKE_ROLE'),
+    'warehouse': os.getenv('SNOWFLAKE_WAREHOUSE'),
+    'database': os.getenv('SNOWFLAKE_DATABASE', 'ADVERSE_EVENT_MONITORING'),
+    'schema': os.getenv('SNOWFLAKE_SCHEMA', 'DEMO_ANALYTICS')
 }
 ```
+
+Create a `.env` file in the root of the directory with the template below
+
+```bash
+# Snowflake Connection Configuration Template
+# Copy this content to a file named .env in your project directory
+
+# Replace all _ with -
+SNOWFLAKE_ACCOUNT=<<SNOWFLAKE_ACCOUNT>>
+SNOWFLAKE_USER=<<SNOWFLAKE_USER>>
+SNOWFLAKE_PASSWORD=<<SNOWFLAKE_PASSWORD>>
+SNOWFLAKE_ROLE=ACCOUNTADMIN
+SNOWFLAKE_WAREHOUSE=ADVERSE_EVENT_WH
+SNOWFLAKE_DATABASE=ADVERSE_EVENT_MONITORING
+SNOWFLAKE_SCHEMA=DEMO_ANALYTICS
+
+# Demo settings
+DEMO_PATIENT_COUNT=1000
+DEMO_MODE=development 
 
 ### Step 4: Run the Complete Pipeline
 
 Execute the Jupyter notebooks in sequence:
 
 ```bash
-# Start Jupyter Lab
-jupyter lab
-
 # Run notebooks in order:
 # 1. 00_Connection_Test.ipynb - Verify Snowflake connectivity
 # 2. 01_Environment_Setup.ipynb - Set up database and warehouse
