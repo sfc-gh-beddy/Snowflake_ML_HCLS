@@ -81,7 +81,10 @@ Execute the notebooks in Snowsight in the following order:
 
 ### Step 3: Upload FAERS Data
 
-- **Upload real FAERS data** from the [FDA website](https://fis.fda.gov/extensions/FPD-QDE-FAERS/FPD-QDE-FAERS.html) via Snowsight stage upload
+- Download FAERS quarterly data (2024 Q2) from the [FDA website](https://fis.fda.gov/extensions/FPD-QDE-FAERS/FPD-QDE-FAERS.html)
+- Alternatively, download pre-processed files from the [GDrive folder](https://drive.google.com/drive/folders/1rzkNIWt-Or0HoRIA2SoTw6lg82RenpC3?usp=sharing)
+
+Then upload to stage.
 
 ### Step 4: Clean Up
 
@@ -148,20 +151,20 @@ After completing the demo, run the cleanup script to remove all objects and stop
 
 ```
 notebooks/
-├── 01_Environment_Setup.ipynb              # Database/warehouse setup
-├── 02_FAERS_Data_Setup.ipynb              # FDA data loading
-├── 03_Analytics_Tables_Setup.ipynb        # Healthcare data generation
-├── 03b_FAERS_HCLS_Integration.ipynb       # Data integration
-├── 04_Feature_Engineering.ipynb           # ML feature preparation
-├── 05_Model_Training.ipynb                # Single-warehouse ML training
-├── 05a_SPCS_Distributed_Setup.ipynb       # [Optional] Compute pools setup
-├── 05b_True_Distributed_Training.ipynb    # [Optional] Multi-node training
-├── 06_Model_Evaluation.ipynb              # Model performance evaluation
-├── 07_ML_Observability.ipynb              # Model monitoring setup
-├── 08_ML_Inference_Pipeline.ipynb         # Production inference
-└── 09_Experiment_Tracking.ipynb           # Experiment management
+├── 01_Environment_Setup.ipynb
+├── 02_FAERS_Data_Setup.ipynb
+├── 03_Analytics_Tables_Setup.ipynb
+├── 03b_FAERS_HCLS_Integration.ipynb
+├── 04_Feature_Engineering.ipynb
+├── 05_Model_Training.ipynb
+├── 05a_SPCS_Distributed_Setup.ipynb
+├── 05b_True_Distributed_Training.ipynb
+├── 06_Model_Evaluation.ipynb
+├── 07_ML_Observability.ipynb
+├── 08_ML_Inference_Pipeline.ipynb
+└── 09_Experiment_Tracking.ipynb
 
-cleanup_demo.sql                            # Complete environment cleanup
+cleanup_demo.sql
 ```
 
 ## Additional Resources
