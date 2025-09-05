@@ -66,3 +66,4 @@ connection_config.py
 # Utility Scripts (sensitive operations)
 clear_notebook_outputs.py
 /utils/
+medium_blog_post.txt

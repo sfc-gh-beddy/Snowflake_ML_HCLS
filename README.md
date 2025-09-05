@@ -13,6 +13,9 @@ This demo demonstrates:
 - **Model Registry API**
 - **Native Model Monitors**
 
+
+###  FYI: All notebooks should be created in ADVERSE_EVENT_MONITORING.DEMO_ANALYTICS other than 02_FAERS_Data_Setup (Place in FDA_FAERS Schema)
+
 ## Architecture
 
 ```
@@ -82,8 +85,8 @@ Execute the notebooks in Snowsight in the following order:
 9. **09_Experiment_Tracking.ipynb** - Track experiments
 
 #### **Container Runtime Notebooks** (Distributed compute pools)
-- **05a_SPCS_Distributed_Setup.ipynb** - Set up compute pools for distributed training
-- **05b_True_Distributed_Training.ipynb** - Multi-node distributed ML training
+- **05a_SPCS_Distributed_Setup.ipynb** - Set up compute pools for distributed training (run on WH runtime)
+- **05b_True_Distributed_Training.ipynb** - Multi-node distributed ML training (run on container runtime with new compute pool, with GPU runtime version)
 
 > **Note**: Notebooks 05a and 05b are optional and demonstrate distributed training across multiple compute nodes. Run them only if you need true distributed training capabilities.
 
