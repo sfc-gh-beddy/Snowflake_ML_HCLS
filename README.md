@@ -50,28 +50,36 @@ ML Pipeline
 - **Sufficient privileges** for creating databases, warehouses, and compute pools
 - **ACCOUNTADMIN role** (recommended for compute pool creation)
 
-### Step 1: Upload Notebooks to Snowsight
+### Step 1: Set Up Environment
+
+Run the setup script to create the foundational infrastructure:
+
+1. **Open Snowflake UI** and create a new worksheet
+2. **Set your role** to `ACCOUNTADMIN`
+3. **Copy and paste** the contents of `setup_environment.sql`
+4. **Run the script** to create database, schemas, and warehouse
+
+### Step 2: Upload Notebooks to Snowsight
 
 1. **Download this repository** and extract all notebook files from the `notebooks/` folder
 2. **Open Snowflake UI** and navigate to **Projects > Notebooks**
 3. **Upload each notebook** (`.ipynb` files) to your Snowsight environment
-4. **Set your role** to `ACCOUNTADMIN` in Snowsight
+4. **Ensure you're using** the `ADVERSE_EVENT_WH` warehouse in each notebook
 
-### Step 2: Run the Complete Pipeline
+### Step 3: Run the Complete Pipeline
 
 Execute the notebooks in Snowsight in the following order:
 
 #### **Warehouse Runtime Notebooks** (Standard Snowflake compute)
-1. **01_Environment_Setup.ipynb** - Set up database and warehouse
-2. **02_FAERS_Data_Setup.ipynb** - Load FDA adverse event data  
-3. **03_Analytics_Tables_Setup.ipynb** - Generate synthetic healthcare data
-4. **03b_FAERS_HCLS_Integration.ipynb** - Integrate data sources
-5. **04_Feature_Engineering.ipynb** - Prepare ML features
-6. **05_Model_Training.ipynb** - Train ML models (single warehouse)
-7. **06_Model_Evaluation.ipynb** - Evaluate model performance
-8. **07_ML_Observability.ipynb** - Create native Model Monitor
-9. **08_ML_Inference_Pipeline.ipynb** - Deploy inference using Model Registry API
-10. **09_Experiment_Tracking.ipynb** - Track experiments
+1. **02_FAERS_Data_Setup.ipynb** - Load FDA adverse event data  
+2. **03_Analytics_Tables_Setup.ipynb** - Generate synthetic healthcare data
+3. **03b_FAERS_HCLS_Integration.ipynb** - Integrate data sources
+4. **04_Feature_Engineering.ipynb** - Prepare ML features
+5. **05_Model_Training.ipynb** - Train ML models (single warehouse)
+6. **06_Model_Evaluation.ipynb** - Evaluate model performance
+7. **07_ML_Observability.ipynb** - Create native Model Monitor
+8. **08_ML_Inference_Pipeline.ipynb** - Deploy inference using Model Registry API
+9. **09_Experiment_Tracking.ipynb** - Track experiments
 
 #### **Container Runtime Notebooks** (Distributed compute pools)
 - **05a_SPCS_Distributed_Setup.ipynb** - Set up compute pools for distributed training
@@ -79,14 +87,14 @@ Execute the notebooks in Snowsight in the following order:
 
 > **Note**: Notebooks 05a and 05b are optional and demonstrate distributed training across multiple compute nodes. Run them only if you need true distributed training capabilities.
 
-### Step 3: Upload FAERS Data
+### Step 4: Upload FAERS Data
 
 - Download FAERS quarterly data (2024 Q2) from the [FDA website](https://fis.fda.gov/extensions/FPD-QDE-FAERS/FPD-QDE-FAERS.html)
 - Alternatively, download pre-processed files from the [GDrive folder](https://drive.google.com/drive/folders/1rzkNIWt-Or0HoRIA2SoTw6lg82RenpC3?usp=sharing)
 
 Then upload to stage.
 
-### Step 4: Clean Up
+### Step 5: Clean Up
 
 After completing the demo, run the cleanup script to remove all objects and stop charges:
 
@@ -150,21 +158,21 @@ After completing the demo, run the cleanup script to remove all objects and stop
 ## Files in This Repository
 
 ```
+setup_environment.sql                       # Run FIRST - creates infrastructure
 notebooks/
-├── 01_Environment_Setup.ipynb
-├── 02_FAERS_Data_Setup.ipynb
-├── 03_Analytics_Tables_Setup.ipynb
-├── 03b_FAERS_HCLS_Integration.ipynb
-├── 04_Feature_Engineering.ipynb
-├── 05_Model_Training.ipynb
-├── 05a_SPCS_Distributed_Setup.ipynb
-├── 05b_True_Distributed_Training.ipynb
-├── 06_Model_Evaluation.ipynb
-├── 07_ML_Observability.ipynb
-├── 08_ML_Inference_Pipeline.ipynb
-└── 09_Experiment_Tracking.ipynb
+├── 02_FAERS_Data_Setup.ipynb              # FDA data loading
+├── 03_Analytics_Tables_Setup.ipynb        # Healthcare data generation
+├── 03b_FAERS_HCLS_Integration.ipynb       # Data integration
+├── 04_Feature_Engineering.ipynb           # ML feature preparation
+├── 05_Model_Training.ipynb                # Single-warehouse ML training
+├── 05a_SPCS_Distributed_Setup.ipynb       # [Optional] Compute pools setup
+├── 05b_True_Distributed_Training.ipynb    # [Optional] Multi-node training
+├── 06_Model_Evaluation.ipynb              # Model performance evaluation
+├── 07_ML_Observability.ipynb              # Model monitoring setup
+├── 08_ML_Inference_Pipeline.ipynb         # Production inference
+└── 09_Experiment_Tracking.ipynb           # Experiment management
 
-cleanup_demo.sql
+cleanup_demo.sql                            # Complete environment cleanup
 ```
 
 ## Additional Resources
